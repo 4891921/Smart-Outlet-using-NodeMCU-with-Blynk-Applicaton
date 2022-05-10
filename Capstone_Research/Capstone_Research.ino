@@ -1,6 +1,9 @@
 // -- Smart Home Automation System (CAPSTONE PROJECT)
 
 // Fill-in information from your Blynk Template here
+// By Group 3 Hosea 
+// Programmed by Allan Khester Mesa
+
 #define BLYNK_TEMPLATE_ID "Template_ID"
 #define BLYNK_DEVICE_NAME "Device Name"
 #define BLYNK_AUTH_TOKEN "Auth Token"
