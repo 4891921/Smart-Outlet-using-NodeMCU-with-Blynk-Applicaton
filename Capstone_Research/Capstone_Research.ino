@@ -1,9 +1,9 @@
 // -- Smart Home Automation System (CAPSTONE PROJECT)
 
 // Fill-in information from your Blynk Template here
-#define BLYNK_TEMPLATE_ID "TMPL1CArseRR"
-#define BLYNK_DEVICE_NAME "Capstone Project"
-#define BLYNK_AUTH_TOKEN "viP_ztmqiHn5qEsRd_lNl_XaBIRT0AS7"
+#define BLYNK_TEMPLATE_ID "Template_ID"
+#define BLYNK_DEVICE_NAME "Device Name"
+#define BLYNK_AUTH_TOKEN "Auth Token"
 #define BLYNK_PRINT Serial
 
 //Including Libraries and Defining Pins and types of module used
@@ -24,8 +24,8 @@ BlynkTimer timer;
 
 //Inserting Credentials
 char auth[] = BLYNK_AUTH_TOKEN; //AUTH token
-char ssid[] = "Marcelo Mesa"; //Insert Wifi Name
-char pass[] = "5673266372"; // Insert Password
+char ssid[] = "WiFi SSID"; //Insert Wifi Name
+char pass[] = "WiFi Password"; // Insert Password
 
 // -- Code for DHT22
 void sendSensor(){
