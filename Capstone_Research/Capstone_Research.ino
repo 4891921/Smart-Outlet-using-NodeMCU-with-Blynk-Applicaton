@@ -1,7 +1,7 @@
-// -- Smart Home Automation System (CAPSTONE PROJECT)
+// -- Smart Home Automation System (CAPSTONE PROJECT s.y. 21-22)
 
 // Fill-in information from your Blynk Template here
-// By Group 3 Hosea 
+// By Group 3 Hosea from SPUP STEM Strand Set B
 // Programmed by Allan Khester Mesa
 
 #define BLYNK_TEMPLATE_ID "Template_ID"
@@ -41,7 +41,7 @@ void sendSensor(){
     return;
   }
 
-  // Sending the value read of the double or float variables "t" and "h" to the blynk server
+  // Sending the value read by the double or float variables "t" and "h" to the blynk server
   Blynk.virtualWrite(V5, t);
   Blynk.virtualWrite(V6, h);
 }
@@ -132,7 +132,7 @@ void setup() {
   pinMode(relay2_pin, OUTPUT);
   pinMode(relay3_pin, OUTPUT);
   pinMode(relay4_pin, OUTPUT);
-  // Setting the pin of the fire sensor to OUTPUT
+  // Setting the pin of the fire sensor to INPUT_PULLUP
   pinMode(D0, INPUT_PULLUP);
   // Writing a HIGH or a LOW value to a digital pin
   digitalWrite(relay1_pin, relay1_state);
