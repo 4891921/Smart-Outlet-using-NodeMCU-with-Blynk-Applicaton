@@ -1,21 +1,18 @@
 // -- Smart Home Automation System (CAPSTONE PROJECT s.y. 21-22)
-
-// Fill-in information from your Blynk Template here
 // By Group 3 Hosea from SPUP STEM Strand Set B
 // Programmed by Allan Khester Mesa
 
+// Fill-in information from your Blynk Template here
 #define BLYNK_TEMPLATE_ID "Template_ID"
-#define BLYNK_DEVICE_NAME "Device Name"
+#define BLYNK_DEVICE_NAME "Device_Name"
 #define BLYNK_AUTH_TOKEN "Auth Token"
 #define BLYNK_PRINT Serial
-
 //Including Libraries and Defining Pins and types of module used
 #include <ESP8266WiFi.h> // ESP8266 Library
 #include <BlynkSimpleEsp8266.h> //Blynk Library -> Activating the ESP8266 board
 #include "DHT.h" // DHT 22 Library
 #define DHTPIN 4 // Digital Pin 2 for DHT22
 #define DHTTYPE DHT22 // DHT22 -> Type of temperature sensor used
-
 // Defining the pins of the four (4) channel relay (GPIO = D Pin in NodeMCU)
 #define relay1_pin 5 // GPIO 5 == D1 Pin in NodeMCU
 #define relay2_pin 14 // GPIO 14 == D5 Pin in NodeMCU
@@ -28,8 +25,7 @@ BlynkTimer timer;
 //Inserting Credentials
 char auth[] = BLYNK_AUTH_TOKEN; //AUTH token
 char ssid[] = "WiFi SSID"; //Insert Wifi Name
-char pass[] = "WiFi Password"; // Insert Password
-
+char pass[] = "WiFI Password"; // Insert Password
 // -- Code for DHT22
 void sendSensor(){
   float h = dht.readHumidity(); // Storing the value of Humidity
@@ -41,26 +37,41 @@ void sendSensor(){
     return;
   }
 
-  // Sending the value read by the double or float variables "t" and "h" to the blynk server
+  // Sending the value read of the double or float variables "t" and "h" to the blynk server
   Blynk.virtualWrite(V5, t);
   Blynk.virtualWrite(V6, h);
 }
 
-// -- Code for Fire Sensor
-int flag = 0;
-void notifyOnFire() {
+// -- Code for Fire Sensor 1 (Inside)
+int flag1 = 0;
+void notifyOnFire1() {
   int isButtonPressed = digitalRead(D0); // Storing the value of the sensor ( 1 or 0 || True or False)
-  if (isButtonPressed == 1 && flag == 0){ 
+  if (isButtonPressed == 1 && flag1 == 0){ 
     Serial.println("Fire in the House");
     Blynk.logEvent("fire_alert", "Fire Alert!"); // Sending the event log that to the blynk server when a fire wasa detected
-    flag=1;
+    flag1=1;
   }
   else if (isButtonPressed == 0){
-    flag=0;
+    flag1=0;
   }
- Blynk.virtualWrite(V0, isButtonPressed);
+ Blynk.virtualWrite(V7, isButtonPressed);
 }
 
+// -- Code for Fire sensor 2 (Outside)
+
+int flag2 = 0;
+void notifyOnFire2() {
+  int isButtonPressed = digitalRead(D3); // Storing the value of the sensor ( 1 or 0 || True or False)
+  if (isButtonPressed == 1 && flag2 == 0){ 
+    Serial.println("Fire in the House");
+    Blynk.logEvent("fire_alert", "Fire Alert!"); // Sending the event log that to the blynk server when a fire was detected
+    flag2=1;
+  }
+  else if (isButtonPressed == 0){
+    flag2=0;
+  }
+ Blynk.virtualWrite(V8, isButtonPressed);
+}
 // -- Code for Relay Module
 // State of the relay will be set to HIGH because we want the relay to be off when starting the device
 int relay1_state = HIGH;
@@ -122,8 +133,6 @@ BLYNK_WRITE(button4_vpin){
   }
 }
 
-
-
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600); // Baud rate
@@ -132,8 +141,9 @@ void setup() {
   pinMode(relay2_pin, OUTPUT);
   pinMode(relay3_pin, OUTPUT);
   pinMode(relay4_pin, OUTPUT);
-  // Setting the pin of the fire sensor to INPUT_PULLUP
+  // Setting the pin of the fire sensor to OUTPUT
   pinMode(D0, INPUT_PULLUP);
+  pinMode(D3, INPUT_PULLUP);
   // Writing a HIGH or a LOW value to a digital pin
   digitalWrite(relay1_pin, relay1_state);
   digitalWrite(relay2_pin, relay2_state);
@@ -145,7 +155,8 @@ void setup() {
   dht.begin();
   // Time interval for the DHT22 and Fire sensor
   timer.setInterval(2500L, sendSensor);
-  timer.setInterval(1000L, notifyOnFire);
+  timer.setInterval(1000L, notifyOnFire1);
+  timer.setInterval(1000L, notifyOnFire2);
 
   // Sending the read value of the state of the relay to the blynk server
   Blynk.virtualWrite(button1_vpin, relay1_state);
